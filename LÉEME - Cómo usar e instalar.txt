@@ -31,18 +31,21 @@ Si algún día no tienes el ícono, entra a esta carpeta y haz doble
 clic en:  "Iniciar Asistente.vbs"  (hace lo mismo).
 
 ========================================================
-EN EL CELULAR (Android) — 1 paso pendiente
+EN EL CELULAR (Android) — YA ESTÁ EN LÍNEA
 ========================================================
-Para que quede instalada como app en el celular (con su ícono en
-la pantalla de inicio) y/o para generar un archivo .APK, la app
-debe estar publicada en una dirección web (https). Es gratis y
-rápido; Claudio te acompaña en ese único paso. Una vez publicada:
+La app está publicada en:
 
-  - Android (Chrome): abrir la dirección -> menú (⋮) ->
-    "Instalar aplicación". Queda con el ícono de Nuestro Parche.
+   https://elizacs98.github.io/asistente-nuestro-parche/
 
-  - .APK / instalador de Windows sin programar: en
-    www.pwabuilder.com pegas la dirección y descargas los archivos.
+  - Android (Chrome): abre ese enlace -> menú (⋮) ->
+    "Instalar aplicación" (o "Agregar a pantalla de inicio").
+    Queda con el ícono de Nuestro Parche, en pantalla completa.
+
+  - En la PC también puedes instalarla desde ese enlace:
+    Edge/Chrome -> ícono de instalar en la barra de direcciones.
+
+  - ¿Quieres un archivo .APK? En www.pwabuilder.com pegas el
+    enlace de arriba y lo descargas (sin programar).
 
 ========================================================
 Nuestro Parche · Medio de Comunicación Digital
