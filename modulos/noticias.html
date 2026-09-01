@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Portada de Noticia 4:5 — Nuestro Parche</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  :root{
+    --navy:#273A70;
+    --navy-deep:#1b2a54;
+    --gold:#FFC500;
+    --white:#FFFFFF;
+    --black:#111111;
+    --gray:#E6E6E6;
+    --muted:#8a92a6;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Inter',system-ui,sans-serif;
+    background:var(--gray);
+    color:var(--black);
+    min-height:100vh;
+    overflow-x: hidden; /* Evita scroll horizontal en móviles */
+  }
+  .app{
+    display:grid;
+    grid-template-columns: 380px 1fr;
+    min-height:100vh;
+  }
+  
+  /* ---------- AJUSTES MÓVILES (Responsivo) ---------- */
+  @media (max-width: 900px){ 
+    .app{ display: flex; flex-direction: column; } 
+    .panel { border-right: none; border-bottom: 2px solid #dcdcdc; order: 2; }
+    .stage-wrap { order: 1; padding: 20px 0 !important; }
+  }
+
+  /* ---------- PANEL ---------- */
+  .panel{
+    background:#fff;
+    border-right:1px solid #e2e2e2;
+    padding:28px 24px 40px;
+    overflow-y:auto;
+  }
+  .panel h1{
+    font-family:'Merriweather',serif;
+    font-weight:900;
+    font-size:20px;
+    margin:0 0 4px;
+    color:var(--navy);
+  }
+  .panel .sub{ font-size:12.5px; color:var(--muted); margin:0 0 22px; line-height:1.5; }
+  .field{margin-bottom:16px;}
+  .field label{
+    display:block; font-size:11px; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--muted); margin-bottom:6px; font-weight:600;
+  }
+  .field input[type="text"], .field textarea, .field select{
+    width:100%; border:1px solid #dcdcdc; border-radius:8px; padding:10px 12px;
+    font-size:14px; font-family:inherit; color:var(--black); background:#fbfbfb;
+  }
+  .field textarea{min-height:70px; line-height:1.4; resize:vertical;}
+  .field input:focus, .field textarea:focus, .field select:focus{
+    outline:2px solid var(--gold); outline-offset:1px; background:#fff;
+  }
+  .two-col{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .upload-btn{
+    display:flex; align-items:center; gap:10px;
+    border:1.5px dashed #cfcfcf; border-radius:8px; padding:13px;
+    cursor:pointer; font-size:13px; color:var(--navy); background:#fbfbfb;
+  }
+  .upload-btn:hover{ border-color:var(--gold); background:#fff9e0; }
+  .upload-btn input{display:none;}
+  .upload-btn .ico{
+    width:28px;height:28px;border-radius:50%; background:var(--navy); color:#fff;
+    display:flex;align-items:center;justify-content:center; font-size:13px; flex-shrink:0;
+  }
+  .checkline{ display:flex; align-items:center; gap:8px; font-size:13px; color:var(--black); margin-bottom:14px; }
+  .checkline input{ width:16px; height:16px; }
+  .divider{ height:1px; background:#eee; margin:20px 0; }
+  .download-btn{
+    width:100%; background:var(--navy); color:#fff; border:none; border-radius:10px;
+    padding:15px; font-size:14.5px; font-weight:700; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; gap:8px;
+  }
+  .download-btn:hover{ background:var(--navy-deep); }
+  .download-btn:disabled{ opacity:.6; cursor:wait; }
+  .hint{ font-size:11.5px; color:var(--muted); margin-top:10px; line-height:1.5; }
+
+  /* ---------- ESCENARIO ---------- */
+  .stage-wrap{
+    display:flex; align-items:flex-start; justify-content:center; padding:40px 20px;
+    background:#0d1730;
+    overflow: hidden; 
+  }
+  
+  /* Escala dinámica compensando la nueva altura de 1350px */
+  .stage-scale{ 
+    transform: scale(0.5); 
+    transform-origin: top center; 
+    margin-bottom: -675px; 
+  }
+  
+  @media (min-width:1300px){ 
+    .stage-scale{ transform:scale(0.58); margin-bottom: -567px; } 
+  }
+  @media (max-width: 900px){ 
+    .stage-scale{ transform: scale(0.32); margin-bottom: -918px; } 
+  }
+  @media (max-width: 400px){ 
+    .stage-scale{ transform: scale(0.29); margin-bottom: -959px; } 
+  }
+
+  /* NUEVAS MEDIDAS: 1080 x 1350 */
+  #card{
+    width:1080px; height:1350px; position:relative; overflow:hidden;
+    background:#182238; font-family:'Inter',sans-serif;
+  }
+  .photo-container{
+    position:absolute; inset:0; overflow:hidden;
+  }
+  
+  #card .bgphoto{
+    position:absolute; inset:0; width:100%; height:100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    transform: scale(1);
+    transform-origin: center;
+  }
+  
+  #card .bgplaceholder{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    color:rgba(255,255,255,.35); font-size:16px; background:#1c2c52;
+  }
+  #card .gradient{
+    position:absolute; inset:0;
+    background: linear-gradient(to top, rgba(10,14,26,.95) 0%, rgba(10,14,26,.75) 32%, rgba(10,14,26,.15) 62%, transparent 78%);
+  }
+
+  .logo-row{
+    position:absolute; top:52px; left:56px; z-index:5;
+    display:flex; align-items:center; gap:14px;
+  }
+  .logo-row img{ height:52px; width:auto; }
+  .logo-text .brand{
+    color:#fff; font-family:'Merriweather',serif; font-weight:900; font-size:23px; line-height:1;
+  }
+  .logo-text .tagline{
+    color:var(--gold); font-size:9.5px; letter-spacing:.14em; font-weight:700; margin-top:5px;
+  }
+
+  .cat-ribbon{
+    position:absolute; top:50px; right:0; z-index:5;
+    display:flex; align-items:stretch;
+  }
+  .cat-ribbon .stripes{
+    width:34px;
+    background: repeating-linear-gradient(115deg, var(--navy) 0 8px, var(--gold) 8px 16px);
+  }
+  .cat-ribbon .label{
+    padding:14px 30px 14px 18px;
+    color:var(--white);
+    font-weight:800;
+    font-size:22px;
+    letter-spacing:.03em;
+    display:flex; align-items:center;
+  }
+
+  .accent-bar{
+    position:absolute;
+    left:56px; bottom:196px;
+    width:7px; height:0px;
+    background:var(--gold);
+    z-index:5;
+  }
+
+  /* Contenedor que acomoda titular + bajada + etiqueta uno encima del otro,
+     creciendo hacia arriba solo lo que cada texto necesite. Así nunca se
+     encima nada, sin importar qué tan largo sea el titular. */
+  .text-block{
+    position:absolute;
+    left:82px; right:90px; bottom:88px;
+    z-index:5;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:20px;
+  }
+
+  .headline{
+    color:#fff;
+    font-family:'Merriweather',serif;
+    font-weight:900;
+    font-size:46px;
+    line-height:1.2;
+  }
+  .headline .hl{ color:var(--gold); }
+
+  .subtext{
+    color:rgba(255,255,255,.88);
+    font-size:19px;
+    line-height:1.45;
+    font-weight:500;
+    max-width:800px;
+  }
+
+  .series-tag{
+    display:inline-flex;
+    align-items:center;
+    background:var(--gold);
+    color:var(--navy-deep);
+    font-weight:800;
+    font-size:15px;
+    letter-spacing:.05em;
+    padding:8px 20px;
+    border-radius:2px;
+    transform: skewX(-8deg);
+  }
+  .series-tag span{ display:inline-block; transform: skewX(8deg); }
+
+  .footer-row{
+    position:absolute;
+    left:56px; right:56px; bottom:0;
+    height:52px;
+    z-index:5;
+    display:flex; align-items:center; justify-content:space-between;
+    border-top:1px solid rgba(255,255,255,.18);
+  }
+  .footer-row .site{ color:rgba(255,255,255,.85); font-size:14px; font-weight:600; }
+  .footer-row .slide{ color:var(--gold); font-size:14px; font-weight:700; display:flex; align-items:center; gap:6px; }
+
+  .deco{
+    position:absolute; right:-60px; bottom:-60px; width:220px; height:220px;
+    border-radius:50%; border:14px solid var(--gold); opacity:.16; z-index:2;
+  }
+
+  .loading-overlay{
+    position:fixed; inset:0; background:rgba(13,23,48,.8);
+    display:none; flex-direction: column; gap:12px; align-items:center; justify-content:center; 
+    color:#fff; font-size:15px; z-index:50; text-align:center; padding:20px;
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ===================== PANEL ===================== -->
+  <div class="panel">
+    <h1>Portada de Noticia</h1>
+    <p class="sub">Línea gráfica Nuestro Parche · 1080×1350 px. Edita y descarga.</p>
+
+    <div class="field">
+      <label>Foto de fondo</label>
+      <label class="upload-btn">
+        <span class="ico">📷</span>
+        <span id="uploadLabel">Subir foto</span>
+        <input type="file" id="photoInput" accept="image/*">
+      </label>
+    </div>
+
+    <div class="field" id="photoAdjustField" style="display:none;">
+      <label>Acomodar foto (para no cortar cabezas)</label>
+      <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+        <span style="font-size:12px; color:var(--muted); width:46px;">Zoom</span>
+        <input type="range" id="inputZoom" min="100" max="220" value="100" style="flex:1;">
+      </div>
+      <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+        <span style="font-size:12px; color:var(--muted); width:46px;">↕ Vert.</span>
+        <input type="range" id="inputPosY" min="0" max="100" value="50" style="flex:1;">
+      </div>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="font-size:12px; color:var(--muted); width:46px;">↔ Horiz.</span>
+        <input type="range" id="inputPosX" min="0" max="100" value="50" style="flex:1;">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Logo (opcional)</label>
+      <label class="upload-btn">
+        <span class="ico">🔖</span>
+        <span id="logoLabel">Subir logo (PNG transparente)</span>
+        <input type="file" id="logoInput" accept="image/*">
+      </label>
+    </div>
+
+    <div class="field">
+      <label>Categoría</label>
+      <select id="inputCategoria">
+        <option value="gold" selected>Voces del Barrio</option>
+        <option value="navy">La Voz del Poder</option>
+        <option value="orange">Movilidad</option>
+        <option value="green">Parche Ambiental</option>
+        <option value="magenta">Parche de Mujeres</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Pega aquí el texto de la diapositiva</label>
+      <textarea id="inputTextoPrincipal" style="min-height:150px;">Cali endurece controles por *ruido nocturno*
+
+La Alcaldía intensifica operativos en zonas residenciales y comerciales.</textarea>
+      <p class="hint" style="margin-top:8px;">
+        1ª línea = el titular. Pon entre asteriscos la parte que quieres en dorado, así: <strong>*ruido nocturno*</strong>.<br>
+        Deja una línea en blanco y en el siguiente párrafo escribe la bajada.<br>
+        No hay límite de caracteres: si el titular es largo, la letra se ajusta sola para que quepa completo.
+      </p>
+    </div>
+
+    <div class="checkline">
+      <input type="checkbox" id="inputSeriesToggle" checked>
+      <label style="margin:0; text-transform:none; font-size:13px; color:var(--black); font-weight:400;">Mostrar etiqueta de serie</label>
+    </div>
+    <div class="field" id="seriesField">
+      <label>Texto de la etiqueta</label>
+      <input type="text" id="inputSeries" value="VOCES DEL BARRIO" maxlength="24">
+    </div>
+
+    <div class="two-col">
+      <div class="field">
+        <label>Sitio web</label>
+        <input type="text" id="inputSitio" value="www.nuestroparche.com" maxlength="30">
+      </div>
+      <div class="field">
+        <label>¿Es carrusel?</label>
+        <select id="inputCarrusel">
+          <option value="si" selected>Sí, mostrar "Desliza"</option>
+          <option value="no">No, ocultar</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <button class="download-btn" id="downloadBtn">⬇ Descargar Imagen</button>
+    <p class="hint">Formato 4:5 (1080×1350 px). Optimizado para web y móvil.</p>
+  </div>
+
+  <!-- ===================== ESCENARIO ===================== -->
+  <div class="stage-wrap">
+    <div class="stage-scale">
+      <div id="card">
+        <div class="photo-container">
+          <div class="bgplaceholder" id="bgPlaceholder">Sube una foto de fondo</div>
+          <div class="bgphoto" id="bgPhoto" style="display:none;"></div>
+        </div>
+        <div class="gradient"></div>
+        <div class="deco"></div>
+
+        <div class="logo-row">
+          <img id="logoImg" style="display:none;">
+          <div class="logo-text" id="logoTextBlock">
+            <div class="brand">Nuestro Parche</div>
+            <div class="tagline">MEDIO DE COMUNICACIÓN DIGITAL</div>
+          </div>
+        </div>
+
+        <div class="cat-ribbon">
+          <div class="stripes"></div>
+          <div class="label" id="catLabel" style="background:var(--gold); color:var(--navy-deep);">VOCES DEL BARRIO</div>
+        </div>
+
+        <div class="text-block" id="textBlock">
+          <div class="headline" id="cardHeadline"><span id="hlBefore"></span><span class="hl" id="cardHeadlineHl"></span><span id="hlAfter"></span></div>
+
+          <div class="subtext" id="cardSubtext"></div>
+
+          <div class="series-tag" id="cardSeriesTag"><span id="cardSeriesText">VOCES DEL BARRIO</span></div>
+        </div>
+
+        <div class="footer-row">
+          <div class="site" id="cardSitio">www.nuestroparche.com</div>
+          <div class="slide" id="cardSlide">Desliza para más →</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="loading-overlay" id="loadingOverlay">
+  <div>Generando imagen en alta resolución...</div>
+  <div style="font-size:12px; opacity:0.8;">Por favor no cierres ni minimices el navegador.</div>
+</div>
+
+<script>
+  const $ = id => document.getElementById(id);
+
+  const catColors = {
+    gold:    {bg:'#FFC500', text:'#1b2a54', name:'VOCES DEL BARRIO'},
+    navy:    {bg:'#273A70', text:'#FFFFFF', name:'LA VOZ DEL PODER'},
+    orange:  {bg:'#E8790C', text:'#FFFFFF', name:'MOVILIDAD'},
+    green:   {bg:'#1FA34D', text:'#FFFFFF', name:'PARCHE AMBIENTAL'},
+    magenta: {bg:'#A8326B', text:'#FFFFFF', name:'PARCHE DE MUJERES'}
+  };
+
+  // Toma el texto pegado y lo separa en "titular" (primer párrafo) y
+  // "bajada" (lo que sigue después de una línea en blanco).
+  function parseTexto(raw){
+    const text = (raw || '').replace(/\r\n/g, '\n').trim();
+    const blocks = text.split(/\n\s*\n/).map(b => b.replace(/\n/g, ' ').trim()).filter(Boolean);
+    return {
+      headlineRaw: blocks[0] || '',
+      subtextRaw: blocks.slice(1).join(' ') || ''
+    };
+  }
+
+  // Dentro del titular, busca *texto entre asteriscos* y lo separa en
+  // antes / resaltado (dorado) / después.
+  function applyHeadline(headlineRaw){
+    const match = headlineRaw.match(/\*(.+?)\*/);
+    if (match){
+      $('hlBefore').textContent = headlineRaw.slice(0, match.index);
+      $('cardHeadlineHl').textContent = match[1];
+      $('hlAfter').textContent = headlineRaw.slice(match.index + match[0].length);
+    } else {
+      $('hlBefore').textContent = headlineRaw;
+      $('cardHeadlineHl').textContent = '';
+      $('hlAfter').textContent = '';
+    }
+  }
+
+  function syncAll(){
+    const { headlineRaw, subtextRaw } = parseTexto($('inputTextoPrincipal').value);
+    applyHeadline(headlineRaw);
+    $('cardSubtext').textContent = subtextRaw;
+    $('cardSitio').textContent = $('inputSitio').value || '';
+
+    const cat = catColors[$('inputCategoria').value];
+    $('catLabel').textContent = cat.name;
+    $('catLabel').style.background = cat.bg;
+    $('catLabel').style.color = cat.text;
+
+    const showSeries = $('inputSeriesToggle').checked;
+    $('cardSeriesTag').style.display = showSeries ? 'inline-flex' : 'none';
+    $('cardSeriesText').textContent = $('inputSeries').value || '';
+    $('seriesField').style.display = showSeries ? 'block' : 'none';
+
+    $('cardSlide').style.display = $('inputCarrusel').value === 'si' ? 'flex' : 'none';
+
+    fitAll();
+  }
+
+  // Ajusta el tamaño de letra del titular (y si hace falta, de la bajada)
+  // para que el bloque completo quepa siempre en la tarjeta, sin importar
+  // qué tan largo sea el texto. Da mucho más margen que antes: un titular
+  // largo, o "una palabra más", ya no se corta ni se encima con nada.
+  function fitAll(){
+    const headline = $('cardHeadline');
+    const subtext = $('cardSubtext');
+    const block = $('textBlock');
+
+    // Espacio vertical disponible desde el borde inferior del bloque de
+    // texto hasta debajo del logo/cintillo de categoría, con margen.
+    const MAX_BLOCK_HEIGHT = 980;
+
+    let headlineSize = 46;
+    let subtextSize = 19;
+    headline.style.fontSize = headlineSize + 'px';
+    subtext.style.fontSize = subtextSize + 'px';
+
+    // 1) Encoge el titular primero, hasta un mínimo legible.
+    while (block.scrollHeight > MAX_BLOCK_HEIGHT && headlineSize > 26){
+      headlineSize -= 1;
+      headline.style.fontSize = headlineSize + 'px';
+    }
+    // 2) Si aun así no cabe (bajada muy larga), encoge también la bajada.
+    while (block.scrollHeight > MAX_BLOCK_HEIGHT && subtextSize > 14){
+      subtextSize -= 1;
+      subtext.style.fontSize = subtextSize + 'px';
+    }
+  }
+
+  ['inputTextoPrincipal','inputSitio','inputCategoria',
+   'inputSeriesToggle','inputSeries','inputCarrusel'].forEach(id=>{
+    $(id).addEventListener('input', syncAll);
+    $(id).addEventListener('change', syncAll);
+  });
+  syncAll();
+
+  function applyPhotoTransform(){
+    const zoom = $('inputZoom').value / 100;
+    const posX = $('inputPosX').value;
+    const posY = $('inputPosY').value;
+    $('bgPhoto').style.transform = `scale(${zoom})`;
+    $('bgPhoto').style.backgroundPosition = `${posX}% ${posY}%`;
+  }
+  
+  ['inputZoom','inputPosX','inputPosY'].forEach(id=>{
+    $(id).addEventListener('input', applyPhotoTransform);
+  });
+
+  $('photoInput').addEventListener('change', (e)=>{
+    const file = e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev)=>{
+      $('bgPhoto').style.backgroundImage = `url("${ev.target.result}")`;
+      $('bgPhoto').style.display = 'block';
+      $('bgPlaceholder').style.display = 'none';
+      $('uploadLabel').textContent = file.name.length > 24 ? file.name.slice(0,21)+'…' : file.name;
+      $('photoAdjustField').style.display = 'block';
+      $('inputZoom').value = 100; $('inputPosX').value = 50; $('inputPosY').value = 50;
+      applyPhotoTransform();
+    };
+    reader.readAsDataURL(file);
+  });
+
+  $('logoInput').addEventListener('change', (e)=>{
+    const file = e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev)=>{
+      $('logoImg').src = ev.target.result;
+      $('logoImg').style.display = 'block';
+      $('logoTextBlock').style.display = 'none';
+      $('logoLabel').textContent = file.name.length > 24 ? file.name.slice(0,21)+'…' : file.name;
+    };
+    reader.readAsDataURL(file);
+  });
+
+  $('downloadBtn').addEventListener('click', async ()=>{
+    const btn = $('downloadBtn');
+    const overlay = $('loadingOverlay');
+    btn.disabled = true;
+    overlay.style.display = 'flex';
+    
+    // Solución error recortes en celular: subir la ventana antes de procesar
+    window.scrollTo(0, 0); 
+    
+    const stageScale = document.querySelector('.stage-scale');
+    const originalTransform = stageScale.style.transform;
+    const originalMargin = stageScale.style.marginBottom;
+    
+    try{
+      // Quitamos la escala responsiva momentáneamente para capturar su tamaño real
+      stageScale.style.transform = 'scale(1)'; 
+      stageScale.style.marginBottom = '0px';
+      
+      await document.fonts.ready;
+      // Damos un tiempo extra al navegador para pintar el cambio antes de tomar la foto
+      await new Promise(r => setTimeout(r, 300));
+      
+      const canvas = await html2canvas(document.getElementById('card'), {
+        scale: 1, // Fundamental para móvil: scale 1 garantiza tamaño original sin crashear la RAM
+        useCORS: true, 
+        backgroundColor: null,
+        scrollX: 0,
+        scrollY: 0
+      });
+      
+      const link = document.createElement('a');
+      const rawTitulo = parseTexto($('inputTextoPrincipal').value).headlineRaw.replace(/\*/g, '');
+      const safe = (rawTitulo || 'nuestro-parche').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,50) || 'nuestro-parche';
+      link.download = `portada-${safe}.jpg`;
+      link.href = canvas.toDataURL('image/jpeg', 0.95);
+      link.click();
+    } catch(err){
+      alert('Hubo un problema generando la imagen en tu dispositivo. Intenta cerrando otras pestañas.');
+      console.error(err);
+    } finally {
+      // Restauramos la vista al estado celular normal
+      stageScale.style.transform = originalTransform;
+      stageScale.style.marginBottom = originalMargin;
+      btn.disabled = false;
+      overlay.style.display = 'none';
+    }
+  });
+</script>
+
+</body>
+</html>

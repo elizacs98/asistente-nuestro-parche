@@ -1,0 +1,49 @@
+========================================================
+   ASISTENTE NUESTRO PARCHE
+   Centro de creación de contenido (todo en una sola app)
+========================================================
+
+5 herramientas unidas en una sola app con menú:
+   1. Noticias 1080×1350
+   2. Carruseles
+   3. Portadas IG / TikTok
+   4. Videos
+   5. Video News
+
+IMPORTANTE: mantén todos los archivos de esta carpeta JUNTOS.
+No borres la carpeta "modulos" ni el archivo "_servidor.pyw".
+Si quieres mover la app, mueve la carpeta COMPLETA.
+
+========================================================
+EN LA PC (Windows) — YA ESTÁ LISTA
+========================================================
+En tu Escritorio verás el ícono:  "Asistente Nuestro Parche"
+
+   >>> Solo haz DOBLE CLIC en ese ícono. <<<
+
+La app se abre en su propia ventana (como un programa normal),
+con el menú y los 5 módulos. Nada de configurar. Nada técnico.
+
+(La primera vez necesita internet para cargar tipografías y las
+ funciones de descarga. Después abre más rápido.)
+
+Si algún día no tienes el ícono, entra a esta carpeta y haz doble
+clic en:  "Iniciar Asistente.vbs"  (hace lo mismo).
+
+========================================================
+EN EL CELULAR (Android) — 1 paso pendiente
+========================================================
+Para que quede instalada como app en el celular (con su ícono en
+la pantalla de inicio) y/o para generar un archivo .APK, la app
+debe estar publicada en una dirección web (https). Es gratis y
+rápido; Claudio te acompaña en ese único paso. Una vez publicada:
+
+  - Android (Chrome): abrir la dirección -> menú (⋮) ->
+    "Instalar aplicación". Queda con el ícono de Nuestro Parche.
+
+  - .APK / instalador de Windows sin programar: en
+    www.pwabuilder.com pegas la dirección y descargas los archivos.
+
+========================================================
+Nuestro Parche · Medio de Comunicación Digital
+========================================================
