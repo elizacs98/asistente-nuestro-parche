@@ -3,7 +3,7 @@
    - App shell y módulos locales: cache-first (funciona sin internet tras la 1ª visita).
    - Recursos externos (fuentes, html2canvas, imágenes de noticias): network-first
      con respaldo en caché, para no romper nada si no hay conexión. */
-const CACHE = 'asistente-np-v1';
+const CACHE = 'asistente-np-v2';
 const LOCAL = [
   './',
   './index.html',

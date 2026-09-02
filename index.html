@@ -126,6 +126,69 @@
   }
   .spin{ width:38px; height:38px; border-radius:50%; border:4px solid rgba(255,255,255,.2); border-top-color:var(--gold); animation:sp 1s linear infinite; }
   @keyframes sp{ to{ transform:rotate(360deg); } }
+
+  /* ====================== BANNER AUTOMÁTICO ====================== */
+  .autobanner{
+    width:100%; max-width:1000px; margin:0 auto 18px; cursor:pointer;
+    display:flex; align-items:center; gap:18px; text-align:left;
+    border:none; border-radius:20px; padding:20px 22px; font-family:inherit;
+    background:linear-gradient(120deg,var(--gold) 0%, #ffd84d 100%);
+    color:var(--navy-deep); box-shadow:0 10px 30px rgba(255,197,0,.28);
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .autobanner:hover{ transform:translateY(-3px); box-shadow:0 16px 40px rgba(255,197,0,.4); }
+  .autobanner .big{ font-size:34px; line-height:1; flex-shrink:0; }
+  .autobanner h2{ font-family:'Merriweather',serif; font-weight:900; font-size:19px; margin:0 0 4px; }
+  .autobanner p{ margin:0; font-size:13px; font-weight:600; opacity:.85; line-height:1.45; }
+  .autobanner .chev{ margin-left:auto; font-size:24px; font-weight:900; flex-shrink:0; }
+  .or-sep{ text-align:center; color:rgba(255,255,255,.5); font-size:12px; font-weight:700;
+    letter-spacing:.14em; text-transform:uppercase; margin:2px auto 16px; max-width:1000px; }
+
+  /* ====================== VISTA AUTOMÁTICO ====================== */
+  #auto{ display:none; position:fixed; inset:0; flex-direction:column; background:#0d1730; z-index:100; overflow-y:auto;
+    color:#fff; padding-bottom:40px; }
+  #auto .topbar{ position:sticky; top:0; z-index:5; }
+  .auto-inner{ width:100%; max-width:680px; margin:0 auto; padding:22px 18px 0; }
+  .auto-inner h2{ font-family:'Merriweather',serif; font-weight:900; font-size:22px; margin:6px 0 4px; }
+  .auto-inner .muted{ color:rgba(255,255,255,.65); font-size:14px; margin:0 0 20px; line-height:1.5; }
+  .auto-tabs{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:16px; }
+  .auto-tabs button{ border:1.5px solid rgba(255,255,255,.18); background:rgba(255,255,255,.06); color:#fff;
+    border-radius:11px; padding:12px 6px; font-size:13px; font-weight:700; cursor:pointer; font-family:inherit; }
+  .auto-tabs button.on{ background:var(--gold); border-color:var(--gold); color:var(--navy-deep); }
+  .auto-pane{ display:none; }
+  .auto-pane.on{ display:block; }
+  .auto-inner input[type=text], .auto-inner textarea{
+    width:100%; border:1.5px solid rgba(255,255,255,.2); border-radius:11px; padding:13px 14px;
+    font-size:15px; font-family:inherit; background:rgba(255,255,255,.06); color:#fff; }
+  .auto-inner textarea{ min-height:150px; line-height:1.5; resize:vertical; }
+  .auto-inner input::placeholder, .auto-inner textarea::placeholder{ color:rgba(255,255,255,.4); }
+  .auto-upload{ display:flex; align-items:center; gap:12px; border:1.5px dashed rgba(255,255,255,.3);
+    border-radius:11px; padding:16px; cursor:pointer; color:#fff; font-size:14px; background:rgba(255,255,255,.04); }
+  .auto-upload input{ display:none; }
+  .genbtn{ width:100%; margin-top:16px; background:var(--gold); color:var(--navy-deep); border:none;
+    border-radius:12px; padding:15px; font-size:15px; font-weight:800; cursor:pointer; font-family:inherit;
+    display:flex; align-items:center; justify-content:center; gap:9px; }
+  .genbtn:disabled{ opacity:.55; cursor:wait; }
+  .auto-status{ margin-top:14px; font-size:13.5px; color:var(--gold); text-align:center; min-height:20px; line-height:1.5; }
+  .auto-result{ display:none; margin-top:8px; }
+  .auto-result.on{ display:block; }
+  .rev-card{ background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12);
+    border-radius:14px; padding:16px; margin-bottom:18px; }
+  .rev-field{ margin-bottom:12px; }
+  .rev-field label{ display:block; font-size:11px; letter-spacing:.05em; text-transform:uppercase;
+    color:rgba(255,255,255,.55); font-weight:700; margin-bottom:5px; }
+  .rev-field .cat-row{ display:flex; gap:8px; flex-wrap:wrap; }
+  .rev-field select{ width:100%; border:1.5px solid rgba(255,255,255,.2); border-radius:9px; padding:10px;
+    background:#16223f; color:#fff; font-family:inherit; font-size:14px; }
+  .open-title{ font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:rgba(255,255,255,.55);
+    font-weight:800; margin:6px 0 12px; }
+  .open-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .open-grid button{ display:flex; align-items:center; gap:10px; text-align:left; cursor:pointer;
+    border:none; border-radius:13px; padding:14px; font-family:inherit; font-weight:800; font-size:14px;
+    color:#fff; background:rgba(255,255,255,.08); }
+  .open-grid button:hover{ background:rgba(255,255,255,.16); }
+  .open-grid button .em{ font-size:22px; }
+  @media (max-width:520px){ .open-grid{ grid-template-columns:1fr; } .auto-tabs{ grid-template-columns:1fr; } }
 </style>
 </head>
 <body>
@@ -140,6 +203,16 @@
       </div>
     </div>
     <p class="lead">Todas tus herramientas de diseño en un solo lugar. Elige qué quieres crear hoy.</p>
+
+    <button class="autobanner" id="autoBanner">
+      <span class="big">⚡</span>
+      <span>
+        <h2>Crear contenido automático</h2>
+        <p>Pega un enlace, un texto o un audio y arma el borrador de cada pieza de una sola vez.</p>
+      </span>
+      <span class="chev">›</span>
+    </button>
+    <div class="or-sep">— o elige una plantilla y hazla manual —</div>
 
     <div class="grid" id="grid"></div>
 
@@ -161,6 +234,72 @@
       <div class="frame-loading" id="frameLoading"><div class="spin"></div><div>Abriendo módulo…</div></div>
       <iframe id="moduleFrame" title="Módulo" allow="fullscreen; autoplay; clipboard-write; encrypted-media"
               allowfullscreen referrerpolicy="no-referrer"></iframe>
+    </div>
+  </section>
+
+  <!-- ==================== VISTA AUTOMÁTICO ==================== -->
+  <section id="auto">
+    <div class="topbar">
+      <button class="backbtn" id="autoBack">‹ Menú</button>
+      <div class="modtitle"><span class="dot" style="background:var(--gold)"></span><span>Crear automático</span></div>
+    </div>
+    <div class="auto-inner">
+      <h2>Un solo contenido para todas tus piezas</h2>
+      <p class="muted">Elige de dónde sale la información. El asistente saca el titular, la bajada, la categoría y los datos clave del texto real (no inventa). Después revisas y descargas cada pieza.</p>
+
+      <div class="auto-tabs">
+        <button class="on" data-tab="url">🔗 Desde un enlace</button>
+        <button data-tab="text">📝 Desde un texto</button>
+        <button data-tab="audio">🎙️ Desde un audio</button>
+      </div>
+
+      <div class="auto-pane on" data-pane="url">
+        <input type="text" id="autoUrl" placeholder="https://nuestroparche.com/…  (pega el enlace de la noticia)">
+      </div>
+      <div class="auto-pane" data-pane="text">
+        <textarea id="autoText" placeholder="Pega aquí la noticia. La primera línea se toma como titular y el resto como cuerpo."></textarea>
+      </div>
+      <div class="auto-pane" data-pane="audio">
+        <label class="auto-upload">
+          <span>🎧</span>
+          <span id="autoAudioLabel">Subir audio (entrevista o declaración) — se transcribe en tu dispositivo</span>
+          <input type="file" id="autoAudio" accept="audio/*,video/*">
+        </label>
+        <p class="muted" style="margin-top:10px; font-size:12.5px;">La primera vez, la transcripción descarga un modelo de voz (puede tardar). Todo ocurre en tu equipo, sin enviar el audio a ningún servidor.</p>
+      </div>
+
+      <button class="genbtn" id="genBtn">⚡ Generar borrador</button>
+      <div class="auto-status" id="autoStatus"></div>
+
+      <div class="auto-result" id="autoResult">
+        <div class="rev-card">
+          <div class="rev-field">
+            <label>Titular</label>
+            <textarea id="revTitulo" style="min-height:60px;"></textarea>
+          </div>
+          <div class="rev-field">
+            <label>Bajada</label>
+            <textarea id="revBajada" style="min-height:70px;"></textarea>
+          </div>
+          <div class="rev-field">
+            <label>Categoría</label>
+            <select id="revCat">
+              <option value="gold">Voces del Barrio</option>
+              <option value="navy">La Voz del Poder</option>
+              <option value="orange">Movilidad</option>
+              <option value="green">Parche Ambiental</option>
+              <option value="magenta">Parche de Mujeres</option>
+            </select>
+          </div>
+          <div class="rev-field">
+            <label>Dato / cifra principal (si hay)</label>
+            <input type="text" id="revCifra" placeholder="ej. 85 · $20.000 · 30%">
+          </div>
+        </div>
+
+        <div class="open-title">Abrir ya rellenado en:</div>
+        <div class="open-grid" id="openGrid"></div>
+      </div>
     </div>
   </section>
 
@@ -201,28 +340,44 @@
   })();
 
   // ---- Router por hash (permite usar el botón "atrás") ----
+  var pendingPrefill = null; // {moduleId, draft}
   function openModule(m){
     $('modName').textContent = m.title;
     $('modDot').style.background = m.color;
     $('frameLoading').style.display = 'flex';
     var f = $('moduleFrame');
-    f.onload = function(){ $('frameLoading').style.display = 'none'; };
+    f.onload = function(){
+      $('frameLoading').style.display = 'none';
+      if(pendingPrefill && pendingPrefill.moduleId === m.id){
+        var pf = pendingPrefill; pendingPrefill = null;
+        setTimeout(function(){ applyPrefill(f, pf.moduleId, pf.draft); }, 300);
+      }
+    };
     f.src = m.file;
+    $('auto').style.display = 'none';
     $('viewer').style.display = 'flex';
     $('menu').style.display = 'none';
     document.querySelector('meta[name=theme-color]').setAttribute('content', m.color);
   }
   function showMenu(){
     $('viewer').style.display = 'none';
+    $('auto').style.display = 'none';
     $('menu').style.display = 'flex';
     var f = $('moduleFrame');
     // liberar memoria del módulo anterior
     f.onload = null; f.src = 'about:blank';
     document.querySelector('meta[name=theme-color]').setAttribute('content', '#273A70');
   }
+  function openAuto(){
+    $('viewer').style.display = 'none';
+    $('menu').style.display = 'none';
+    $('auto').style.display = 'flex';
+    document.querySelector('meta[name=theme-color]').setAttribute('content', '#0d1730');
+  }
   function route(){
     var id = (location.hash || '').replace('#','');
-    if(id && byId[id]){ openModule(byId[id]); }
+    if(id === 'auto'){ openAuto(); }
+    else if(id && byId[id]){ openModule(byId[id]); }
     else { showMenu(); }
   }
   window.addEventListener('hashchange', route);
@@ -230,6 +385,162 @@
     if(location.hash){ history.back(); } else { showMenu(); }
   });
   route();
+
+  // ===================== MODO AUTOMÁTICO =====================
+  var currentTab = 'url';
+  var engineWin = null, engineLoading = null;
+  var CAT_NAME = { gold:'VOCES DEL BARRIO', navy:'LA VOZ DEL PODER', orange:'MOVILIDAD', green:'PARCHE AMBIENTAL', magenta:'PARCHE DE MUJERES' };
+
+  // Carga el motor de Video News en un iframe oculto y expone NPArticle/NPScript/NPTranscribe
+  function loadEngine(){
+    if(engineWin) return Promise.resolve(engineWin);
+    if(engineLoading) return engineLoading;
+    engineLoading = new Promise(function(resolve, reject){
+      var fr = document.createElement('iframe');
+      fr.style.display = 'none'; fr.setAttribute('aria-hidden','true');
+      fr.src = 'modulos/video-news.html';
+      fr.onload = function(){
+        var tries = 0;
+        (function check(){
+          var w = fr.contentWindow;
+          if(w && w.NPArticle && w.NPScript){ engineWin = w; resolve(w); }
+          else if(tries++ < 60){ setTimeout(check, 100); }
+          else reject(new Error('No se pudo iniciar el motor. Revisa tu conexión.'));
+        })();
+      };
+      fr.onerror = function(){ reject(new Error('No se pudo iniciar el motor.')); };
+      document.body.appendChild(fr);
+    });
+    return engineLoading;
+  }
+
+  function mapCategoria(slug){
+    var s = (slug||'').toLowerCase();
+    if(/voz|poder|politic|alcald|concejo|gobern|elec/.test(s)) return 'navy';
+    if(/movil|transporte|\bmio\b|via|trafico|transito/.test(s)) return 'orange';
+    if(/ambient|clima|ecolog|verde|\brio\b|arbol|animal/.test(s)) return 'green';
+    if(/mujer|genero|femin/.test(s)) return 'magenta';
+    return 'gold';
+  }
+  function firstSentence(text){
+    var m = (text||'').replace(/\s+/g,' ').trim();
+    var i = m.search(/[.!?]\s/);
+    return i > 0 ? m.slice(0, i+1) : m.slice(0, 200);
+  }
+  function markFigure(titulo, cifra){
+    return (cifra && titulo.indexOf(cifra) >= 0) ? titulo.replace(cifra, '*'+cifra+'*') : titulo;
+  }
+
+  async function generar(){
+    var status = $('autoStatus'), btn = $('genBtn');
+    btn.disabled = true; $('autoResult').classList.remove('on');
+    try{
+      status.textContent = 'Preparando el motor…';
+      var w = await loadEngine();
+      var article;
+      if(currentTab === 'url'){
+        var url = $('autoUrl').value.trim();
+        if(!url) throw new Error('Pega el enlace de la noticia.');
+        status.textContent = 'Leyendo la noticia…';
+        article = await w.NPArticle.fromUrl(url);
+      } else if(currentTab === 'text'){
+        var t = $('autoText').value.trim();
+        if(!t) throw new Error('Pega el texto de la noticia.');
+        article = w.NPArticle.fromText(t);
+      } else {
+        var file = $('autoAudio').files[0];
+        if(!file) throw new Error('Sube un archivo de audio.');
+        if(!w.NPTranscribe || !w.NPTranscribe.isAvailable()) throw new Error('La transcripción de audio no está disponible en este navegador.');
+        status.textContent = 'Transcribiendo el audio… (la primera vez descarga un modelo)';
+        var out = await w.NPTranscribe.transcribe(file, function(msg){ if(msg) status.textContent = typeof msg==='string'? msg : 'Transcribiendo…'; });
+        var text = typeof out === 'string' ? out : (out && out.text) || '';
+        if(!text.trim()) throw new Error('No se pudo transcribir el audio. Prueba con "Desde un texto".');
+        article = w.NPArticle.fromTranscription(text, { fileName: file.name });
+      }
+      var data = w.NPScript.extractData(article.body || article.title || '');
+      $('revTitulo').value = (article.title || '').trim();
+      $('revBajada').value = (article.subtitle || '').trim() || firstSentence(article.body);
+      $('revCat').value = mapCategoria(article.sectionSlug);
+      $('revCifra').value = (data && data.headline) ? data.headline : '';
+      $('autoResult').classList.add('on');
+      status.textContent = '✓ Listo. Revisa el texto y abre cada pieza.';
+      $('autoResult').scrollIntoView({ behavior:'smooth', block:'nearest' });
+    } catch(err){
+      status.textContent = '⚠ ' + (err && err.message ? err.message : 'No se pudo generar.');
+    } finally { btn.disabled = false; }
+  }
+
+  function currentDraft(){
+    var catKey = $('revCat').value;
+    var titulo = $('revTitulo').value.trim();
+    var cifra  = $('revCifra').value.trim();
+    return {
+      titulo: titulo,
+      tituloMark: markFigure(titulo, cifra),
+      bajada: $('revBajada').value.trim(),
+      catKey: catKey,
+      catName: CAT_NAME[catKey] || 'VOCES DEL BARRIO',
+      cifra: cifra
+    };
+  }
+  function openInModule(id){
+    pendingPrefill = { moduleId: id, draft: currentDraft() };
+    location.hash = id;
+  }
+
+  // Inyecta el contenido en los campos del módulo (mismo origen → accesible)
+  function applyPrefill(frame, id, d){
+    var doc;
+    try{ doc = frame.contentDocument || frame.contentWindow.document; }catch(e){ return; }
+    function set(fid, val){
+      var el = doc.getElementById(fid); if(!el) return;
+      el.value = val;
+      el.dispatchEvent(new Event('input', { bubbles:true }));
+      el.dispatchEvent(new Event('change', { bubbles:true }));
+    }
+    if(id === 'noticias'){
+      set('inputTextoPrincipal', d.tituloMark + (d.bajada ? '\n\n' + d.bajada : ''));
+      set('inputCategoria', d.catKey);
+    } else if(id === 'portadas'){
+      set('inHead', d.tituloMark);
+    } else if(id === 'videos'){
+      set('inKicker', d.catName);
+      set('inTitle', d.titulo);
+      set('inSub', d.bajada);
+    } else if(id === 'carrusel'){
+      set('inLabel', d.catName);
+      set('inDatoHead', d.titulo);
+      if(d.cifra) set('inDatoBig', d.cifra);
+    }
+    // video-news usa su propio flujo (no se rellena)
+  }
+
+  (function initAuto(){
+    var tabs = document.querySelectorAll('.auto-tabs button');
+    tabs.forEach(function(b){
+      b.addEventListener('click', function(){
+        tabs.forEach(function(x){ x.classList.remove('on'); });
+        b.classList.add('on');
+        currentTab = b.getAttribute('data-tab');
+        document.querySelectorAll('.auto-pane').forEach(function(p){
+          p.classList.toggle('on', p.getAttribute('data-pane') === currentTab);
+        });
+      });
+    });
+    $('genBtn').addEventListener('click', generar);
+    $('autoBanner').addEventListener('click', function(){ location.hash = 'auto'; });
+    $('autoBack').addEventListener('click', function(){ if(location.hash){ history.back(); } else { showMenu(); } });
+    $('autoAudio').addEventListener('change', function(e){
+      var f = e.target.files[0]; if(f) $('autoAudioLabel').textContent = f.name;
+    });
+    var og = $('openGrid');
+    MODULES.forEach(function(m){
+      var b = document.createElement('button');
+      b.innerHTML = '<span class="em">' + m.emoji + '</span><span>' + m.title + '</span>';
+      b.addEventListener('click', function(){ openInModule(m.id); });
+      og.appendChild(b);
+    });
+  })();
 
   // ---- Instalación PWA ----
   var deferredPrompt = null;
